@@ -1,6 +1,8 @@
 ﻿using Moq;
 using NUnit.Framework;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using TaskManagementApp.Api.Models;
 using TaskManagementApp.Api.Repositories;
 using TaskManagementApp.Api.Services;
@@ -96,6 +98,26 @@ namespace TaskManagementApp.Tests
 
             // Assert
             _mockColumnRepository.Verify(repo => repo.DeleteColumn(columnIdToDelete), Times.Once);
+        }
+
+        [Test]
+        public void SortSortTaskByNameAscending_ReturnsTaskSortedByNameAscending()
+        {
+            // Arrange
+            var tasks = new List<Task>
+            {
+                new Task { Id = 1, Name = "Task B", Description = "Description for Task 1", Deadline = DateTime.Now.AddDays(7) },
+                new Task { Id = 2, Name = "Task A", Description = "Description for Task 2", Deadline = DateTime.Now.AddDays(14) }
+            };
+
+            var column = new Column { Tasks = tasks };
+
+            // Act
+            var sortedTasks = _columnService.SortTaskByNameAscending(column).ToList();
+
+            // Assert
+            Assert.AreEqual("Task A", sortedTasks[0].Name);
+            Assert.AreEqual("Task B", sortedTasks[1].Name);
         }
     }
 }

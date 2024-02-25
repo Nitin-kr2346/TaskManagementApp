@@ -10,5 +10,7 @@ namespace TaskManagementApp.Api.Services
         Column AddColumn(Column column);
         void UpdateColumn(Column column);
         void DeleteColumn(int id);
+        IEnumerable<Task> SortTaskByNameAscending(Column column);
+        IEnumerable<Task> SortTaskByNameDescending(Column column);
     }
 }

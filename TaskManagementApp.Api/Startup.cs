@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 using TaskManagementApp.Api.Repositories;
 using TaskManagementApp.Api.Services;
 
@@ -22,6 +23,12 @@ namespace TaskManagementApp.Api
         {
             services.AddControllers();
 
+            // Add Swagger documentation generation
+            services.AddSwaggerGen(options =>
+            {
+                options.SwaggerDoc("v1", new OpenApiInfo { Title = "TaskManagementApp", Version = "v1" });
+            });
+
             // Register services and repositories
             services.AddScoped<ITaskService, TaskService>();
             services.AddScoped<IColumnService, ColumnService>();
@@ -36,6 +43,14 @@ namespace TaskManagementApp.Api
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            // Enable middleware to serve generated Swagger as a JSON endpoint
+            app.UseSwagger();
+
+            app.UseSwaggerUI(options =>
+            {
+                options.SwaggerEndpoint("/swagger/v1/swagger.json", "TaskManagementApp");
+            });
 
             app.UseHttpsRedirection();
 

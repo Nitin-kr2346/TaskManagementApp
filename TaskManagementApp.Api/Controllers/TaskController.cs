@@ -6,6 +6,9 @@ using TaskManagementApp.Api.Services;
 
 namespace TaskManagementApp.Api.Controllers
 {
+    /// <summary>
+    /// Controller for managing Tasks
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class TaskController : ControllerBase
@@ -17,7 +20,10 @@ namespace TaskManagementApp.Api.Controllers
             _taskService = taskService ?? throw new ArgumentNullException(nameof(taskService));
         }
 
-        // GET: api/task
+        /// <summary>
+        /// Get all the tasks, GET: api/task
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public ActionResult<IEnumerable<Task>> GetTasks()
         {
@@ -25,7 +31,11 @@ namespace TaskManagementApp.Api.Controllers
             return Ok(tasks);
         }
 
-        // GET: api/task/5
+        /// <summary>
+        /// GET: api/task/5
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("{id}")]
         public ActionResult<Task> GetTask(int id)
         {
@@ -37,7 +47,11 @@ namespace TaskManagementApp.Api.Controllers
             return Ok(task);
         }
 
-        // POST: api/task
+        /// <summary>
+        /// POST: api/task
+        /// </summary>
+        /// <param name="task"></param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult<Task> CreateTask(Task task)
         {
@@ -45,7 +59,12 @@ namespace TaskManagementApp.Api.Controllers
             return CreatedAtAction(nameof(GetTask), new { id = createdTask.Id }, createdTask);
         }
 
-        // PUT: api/task/5
+        /// <summary>
+        /// PUT: api/task/5
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="task"></param>
+        /// <returns></returns>
         [HttpPut("{id}")]
         public IActionResult UpdateTask(int id, Task task)
         {
@@ -64,7 +83,11 @@ namespace TaskManagementApp.Api.Controllers
             return NoContent();
         }
 
-        // DELETE: api/task/5
+        /// <summary>
+        /// DELETE: api/task/5
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete("{id}")]
         public IActionResult DeleteTask(int id)
         {

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using TaskManagementApp.Api.Models;
 using TaskManagementApp.Api.Repositories;
 
@@ -50,6 +51,16 @@ namespace TaskManagementApp.Api.Services
                 throw new InvalidOperationException($"Column with id {id} not found.");
             }
             _columnRepository.DeleteColumn(id);
+        }
+
+        public IEnumerable<Task> SortTaskByNameAscending(Column column)
+        {
+            return column.Tasks.OrderBy(task => task.Name);
+        }
+
+        public IEnumerable<Task> SortTaskByNameDescending(Column column)
+        {
+            return column.Tasks.OrderByDescending(task => task.Name);
         }
     }
 }
